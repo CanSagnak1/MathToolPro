@@ -1,4 +1,4 @@
-# 🧮 ToolMath
+# ToolMath
 
 <div align="center">
 
@@ -12,7 +12,7 @@
 
 *Beautiful UI • Powerful Features • Native Performance*
 
-[Features](#-features) • [Screenshots](#-screenshots) • [Installation](#-installation) • [Architecture](#-architecture) • [Contributing](#-contributing)
+[Features](#features) • [Installation](#installation) • [Architecture](#architecture) • [Contributing](#contributing)
 
 </div>
 
