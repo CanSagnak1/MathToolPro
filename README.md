@@ -18,23 +18,23 @@
 
 ---
 
-## 📖 About
+## About
 
 **ToolMath** is a premium iOS application that combines four essential mathematical tools into one elegant, unified experience. Built with modern iOS technologies and featuring a stunning dark-themed UI with glass-morphism effects, ToolMath delivers professional-grade functionality with an intuitive user interface.
 
-### ✨ Why ToolMath?
+### Why ToolMath?
 
-- 🎨 **Modern Design** - Beautiful gradient buttons, glass-morphism cards, and smooth animations
-- ⚡ **Native Performance** - Built with UIKit and Swift for optimal speed
-- 🧩 **All-in-One** - Calculator, Converter, Graph Plotter, and Settings in one app
-- 🎯 **User-Focused** - Intuitive interactions with haptic feedback
-- 📱 **iOS Native** - Follows Apple's Human Interface Guidelines
+- **Modern Design** - Beautiful gradient buttons, glass-morphism cards, and smooth animations
+- **Native Performance** - Built with UIKit and Swift for optimal speed
+- **All-in-One** - Calculator, Converter, Graph Plotter, and Settings in one app
+- **User-Focused** - Intuitive interactions with haptic feedback
+- **iOS Native** - Follows Apple's Human Interface Guidelines
 
 ---
 
-## 🚀 Features
+## Features
 
-### 💙 Calculator
+### Calculator
 > *Premium Scientific Calculator with Modern UI*
 
 - **Dual Modes**
@@ -53,18 +53,18 @@
   - Expression history
   - Error handling with shake animation
 
-### 🔄 Converter
+### Converter
 > *Multi-Category Unit Converter with Animated Values*
 
 - **8 Conversion Categories**
-  - 📏 Length (meters, feet, miles, etc.)
-  - ⚖️ Weight (kg, lbs, ounces, etc.)
-  - 🌡️ Temperature (C, F, K)
-  - 💾 Data (bytes, MB, GB, etc.)
-  - 🕐 Time (seconds, minutes, hours)
-  - 🏃 Speed (km/h, mph, m/s)
-  - 📐 Area (m², ft², acres)
-  - 🧊 Volume (liters, gallons, cups)
+  - Length (meters, feet, miles, etc.)
+  - Weight (kg, lbs, ounces, etc.)
+  - Temperature (C, F, K)
+  - Data (bytes, MB, GB, etc.)
+  - Time (seconds, minutes, hours)
+  - Speed (km/h, mph, m/s)
+  - Area (m², ft², acres)
+  - Volume (liters, gallons, cups)
 
 - **Features**
   - Glass-morphism conversion card
@@ -74,7 +74,7 @@
   - Custom keypad
   - Conversion history
 
-### 📊 Graph Plotter
+### Graph Plotter
 > *Immersive Function Visualization*
 
 - **Interactive Graphing**
@@ -96,18 +96,18 @@
   - Function name editing
   - Expression validation
 
-### ⚙️ Settings
+### Settings
 > *Comprehensive Preferences Management*
 
 - **8 Organized Categories**
-  - 🎨 Appearance (haptic, animations)
-  - 🧮 Calculation (angle mode, precision)
-  - 📊 Graph Plotter (zoom, line thickness, grid)
-  - 🔄 Converter (default category, auto-convert)
-  - 🗄️ Data Management (clear histories)
-  - ⚡ Advanced (developer mode, performance)
-  - ℹ️ About (version, build info)
-  - 🔄 Reset (restore defaults)
+  - Appearance (haptic, animations)
+  - Calculation (angle mode, precision)
+  - Graph Plotter (zoom, line thickness, grid)
+  - Converter (default category, auto-convert)
+  - Data Management (clear histories)
+  - Advanced (developer mode, performance)
+  - About (version, build info)
+  - Reset (restore defaults)
 
 - **Collapsible Sections**
   - Glass-morphism cards
@@ -121,31 +121,7 @@
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-
-### Calculator
-![Calculator Basic Mode](screenshots/calculator-basic.png)
-![Calculator Scientific Mode](screenshots/calculator-sci.png)
-
-### Converter
-![Converter Length](screenshots/converter-length.png)
-![Converter Temperature](screenshots/converter-temp.png)
-
-### Graph Plotter
-![Graph Single Function](screenshots/graph-single.png)
-![Graph Multiple Functions](screenshots/graph-multi.png)
-
-### Settings
-![Settings Appearance](screenshots/settings-appearance.png)
-![Settings Calculation](screenshots/settings-calc.png)
-
-</div>
-
----
-
-## 🏗️ Architecture
+## Architecture
 
 ### Design Pattern
 **MVVM (Model-View-ViewModel)** with **Combine** for reactive programming
@@ -192,7 +168,7 @@ ToolMath/
 │   │   ├── ViewModels/
 │   │   │   └── ConverterViewModel.swift
 │   │   └── Views/
-│   │       └── ConverterViewController.swift
+│   │       ├── ConverterViewController.swift
 │   │
 │   ├── GraphPlotter/
 │   │   ├── Models/
@@ -235,13 +211,13 @@ ToolMath/
 
 ### Key Technologies
 
-#### 🎨 UI Components
+#### UI Components
 - **Glass-morphism** - UIVisualEffectView with blur
 - **Gradient Layers** - CAGradientLayer for depth
 - **Custom Animations** - CABasicAnimation, UIView.animate
 - **Shadow Effects** - Multi-layered shadows for depth
 
-#### 📊 Data Flow
+#### Data Flow
 ```
 View → User Action
   ↓
@@ -252,7 +228,7 @@ Model ← Business Logic
 Persistence ← UserDefaults/Memory
 ```
 
-#### 🎯 Design Patterns
+#### Design Patterns
 - **MVVM** - Separation of concerns
 - **Singleton** - HapticManager, Theme
 - **Observer** - Combine publishers/subscribers
@@ -261,7 +237,7 @@ Persistence ← UserDefaults/Memory
 
 ---
 
-## 💻 Installation
+## Installation
 
 ### Requirements
 - **Xcode** 15.0+
@@ -273,7 +249,7 @@ Persistence ← UserDefaults/Memory
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ToolMath.git
+git clone https://github.com/CanSagnak1/MathToolPro.git
 cd ToolMath
 
 # Open in Xcode
@@ -287,7 +263,7 @@ xcodebuild -project ToolMath.xcodeproj -scheme ToolMath -configuration Debug
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/ToolMath.git
+   git clone https://github.com/CanSagnak1/MathToolPro.git
    ```
 
 2. **Open project in Xcode**
@@ -306,7 +282,7 @@ xcodebuild -project ToolMath.xcodeproj -scheme ToolMath -configuration Debug
 
 ---
 
-## 🎨 Design System
+## Design System
 
 ### Color Palette
 
@@ -382,7 +358,7 @@ Keyframe: Custom curves
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### AppSettings.swift
 All user preferences are stored and managed through `AppSettings`:
@@ -416,7 +392,7 @@ performanceMode: Bool
 
 ---
 
-## 📱 Usage
+## Usage
 
 ### Calculator
 
@@ -460,7 +436,7 @@ performanceMode: Bool
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Unit Tests
 ```bash
@@ -486,7 +462,7 @@ xcodebuild test -project ToolMath.xcodeproj -scheme ToolMath -destination 'platf
 
 ---
 
-## 🚀 Roadmap
+## Roadmap
 
 ### Version 2.0 (Planned)
 - [ ] **History Panel** - Slide-up panel for calculation history
@@ -507,7 +483,7 @@ xcodebuild test -project ToolMath.xcodeproj -scheme ToolMath -destination 'platf
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -537,7 +513,7 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 📋 Requirements
+## Requirements
 
 ### Minimum Requirements
 - iOS 15.0+
@@ -556,7 +532,7 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
@@ -586,14 +562,15 @@ SOFTWARE.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Celal Can Sağnak**
 
 - GitHub: [@cansagnak](https://github.com/cansagnak1)
+
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Apple** - For the amazing iOS framework and design guidelines
 - **Swift Community** - For continuous support and contributions
@@ -601,9 +578,9 @@ SOFTWARE.
 
 ---
 
-## ⭐ Show Your Support
+## Show Your Support
 
-If you like this project, please give it a ⭐ on GitHub!
+If you like this project, please give it a star on GitHub!
 
 ---
 
@@ -613,6 +590,6 @@ Made with Celal Can Sağnak
 
 **ToolMath** © 2025
 
-[⬆ Back to Top](#-toolmath)
+[Back to Top](#toolmath)
 
 </div>
