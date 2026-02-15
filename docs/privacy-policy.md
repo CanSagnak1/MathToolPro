@@ -1,232 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToolMath — Privacy Policy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0a0f;
-            --card-bg: rgba(255,255,255,0.04);
-            --border: rgba(255,255,255,0.08);
-            --text: #e8e8ed;
-            --text-muted: #8e8e93;
-            --accent: #00E5A0;
-            --accent-glow: rgba(0,229,160,0.15);
-        }
+# Privacy Policy
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+**Last Updated:** February 15, 2026
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
+## Introduction
 
-        .hero {
-            text-align: center;
-            padding: 80px 20px 40px;
-            background: linear-gradient(180deg, rgba(0,229,160,0.08) 0%, transparent 100%);
-        }
+Thank you for choosing **ToolMath** ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy outlines our policy regarding the collection, use, and disclosure of personal data when you use our application.
 
-        .hero .icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--accent), #00b380);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            font-size: 36px;
-            box-shadow: 0 8px 32px var(--accent-glow);
-        }
+## Summary
 
-        .hero h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-        }
+**ToolMath does not collect, store, share, or transmit any personal data.**
 
-        .hero .subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+We believe in complete privacy. Our application is designed to function entirely offline, ensuring that your data remains strictly on your device.
 
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 24px 80px;
-        }
+---
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            margin-top: 24px;
-            backdrop-filter: blur(20px);
-        }
+## 1. Data Collection
 
-        .card h2 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+We strictly do **not** collect any personal identifiable information (PII).
 
-        .card h2 .emoji { font-size: 1.3rem; }
+-   **No Personal Data:** We do not collect names, email addresses, phone numbers, or location data.
+-   **No Usage Tracking:** We do not use analytics services to track how you interact with the app.
+-   **No Advertising:** ToolMath is ad-free and does not use advertising identifiers (IDFA).
+-   **No Third-Party SDKs:** The app does not contain any third-party tracking code.
 
-        .card p, .card li {
-            color: var(--text-muted);
-            font-size: 0.93rem;
-            margin-bottom: 10px;
-        }
+## 2. Data Storage
 
-        .card ul {
-            list-style: none;
-            padding: 0;
-        }
+Any data generated within the app is stored **locally on your device** only.
 
-        .card ul li::before {
-            content: "✓";
-            color: var(--accent);
-            font-weight: 700;
-            margin-right: 10px;
-        }
+We use Apple's secure local storage (`UserDefaults`) to save your preferences and history for your convenience:
+-   **App Preferences:** Theme settings, decimal precision, angle modes, etc.
+-   **History:** Recent calculations and unit conversions.
 
-        .highlight {
-            background: var(--accent-glow);
-            border-color: rgba(0,229,160,0.2);
-        }
+This data is never transmitted to us or any third party. You have full control over this data, and it is deleted if you uninstall the application.
 
-        .highlight p {
-            color: var(--text);
-            font-size: 1rem;
-            font-weight: 500;
-            text-align: center;
-        }
+## 3. Network Activity
 
-        .badge {
-            display: inline-block;
-            background: var(--accent);
-            color: #000;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+ToolMath is designed to operate **offline**.
 
-        .date {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.82rem;
-            margin-top: 40px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border);
-        }
+-   The app does not require an internet connection to function.
+-   No network requests are made to external servers.
+-   All mathematical computations, unit conversions, and graph plotting are processed locally on your device's processor.
 
-        .footer {
-            text-align: center;
-            padding: 32px 20px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
+## 4. Children’s Privacy
 
-        .footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+We do not knowingly collect personal information from children under 13. Since our application does not collect any data at all, it is safe for users of all ages.
 
-        @media (max-width: 600px) {
-            .hero { padding: 60px 20px 30px; }
-            .hero h1 { font-size: 1.6rem; }
-            .card { padding: 24px; }
-        }
-    </style>
-</head>
-<body>
+## 5. Changes to This Privacy Policy
 
-<div class="hero">
-    <div class="icon">📐</div>
-    <h1>ToolMath</h1>
-    <p class="subtitle">Privacy Policy</p>
-</div>
+We may update our Privacy Policy from time to time. Modifications will be effective immediately upon posting the updated policy. We encourage you to review this page periodically for any changes.
 
-<div class="container">
+## 6. Contact Us
 
-    <div class="card highlight">
-        <p>🛡️ ToolMath does <strong>not collect, store, or share</strong> any personal data.</p>
-    </div>
+If you have any questions or concerns about this Privacy Policy, please contact us:
 
-    <div class="card">
-        <h2><span class="emoji">📋</span> Overview</h2>
-        <p>ToolMath is a calculator, unit converter, and graph plotter application designed for iOS. Your privacy is important to us. This policy explains what data the app accesses and how it is used.</p>
-    </div>
-
-    <div class="card">
-        <h2><span class="emoji">💾</span> Data Storage</h2>
-        <p>ToolMath stores the following data <strong>locally on your device only</strong>:</p>
-        <ul>
-            <li>App preferences and settings (theme, decimal places, angle mode, etc.)</li>
-            <li>Calculation history (recent calculations)</li>
-            <li>Conversion history (recent conversions)</li>
-        </ul>
-        <p>All data is stored using Apple's <code>UserDefaults</code> API. This data never leaves your device and is not transmitted to any server.</p>
-    </div>
-
-    <div class="card">
-        <h2><span class="emoji">🚫</span> What We Do NOT Collect</h2>
-        <ul>
-            <li>No personal information (name, email, phone)</li>
-            <li>No location data</li>
-            <li>No usage analytics or tracking</li>
-            <li>No advertising identifiers</li>
-            <li>No third-party SDKs or analytics tools</li>
-            <li>No network requests — the app works 100% offline</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <h2><span class="emoji">🌐</span> Network Access</h2>
-        <p>ToolMath does <strong>not</strong> require an internet connection and does not make any network requests. All calculations, conversions, and graph plotting happen entirely on your device.</p>
-    </div>
-
-    <div class="card">
-        <h2><span class="emoji">👶</span> Children's Privacy</h2>
-        <p>ToolMath does not collect any data from anyone, including children under the age of 13. The app is safe for users of all ages.</p>
-    </div>
-
-    <div class="card">
-        <h2><span class="emoji">🔄</span> Changes to This Policy</h2>
-        <p>If we ever update this privacy policy, changes will be reflected on this page. Since ToolMath does not collect data, we do not anticipate significant changes.</p>
-    </div>
-
-    <div class="card">
-        <h2><span class="emoji">📬</span> Contact</h2>
-        <p>If you have any questions about this privacy policy, you can reach us at:</p>
-        <p><strong>Email:</strong> <a href="mailto:cansagnak@icloud.com" style="color: var(--accent); text-decoration: none;">cansagnak@icloud.com</a></p>
-    </div>
-
-    <div class="date">
-        <span class="badge">Effective</span><br>
-        Last updated: February 15, 2026
-    </div>
-</div>
-
-<div class="footer">
-    <p>© 2026 ToolMath. All rights reserved.</p>
-    <p><a href="https://github.com/CanSagnak1/MathToolPro">GitHub</a></p>
-</div>
-
-</body>
-</html>
+-   **Email:** [cansagnak@icloud.com](mailto:cansagnak@icloud.com)
