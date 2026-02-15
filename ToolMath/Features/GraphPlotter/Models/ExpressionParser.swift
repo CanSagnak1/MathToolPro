@@ -28,7 +28,12 @@ class ExpressionParser {
             .replacingOccurrences(of: "×", with: "*")
             .replacingOccurrences(of: "÷", with: "/")
             .replacingOccurrences(of: "π", with: String(Double.pi))
-            .replacingOccurrences(of: "e", with: String(M_E))
+
+        expr = expr.replacingOccurrences(
+            of: "(?<![a-zA-Z0-9.])e(?![a-zA-Z0-9.])",
+            with: String(M_E),
+            options: .regularExpression
+        )
 
         expr = expr.replacingOccurrences(of: "x", with: "(\(formattedX))")
 

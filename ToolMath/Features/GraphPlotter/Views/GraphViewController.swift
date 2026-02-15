@@ -13,17 +13,7 @@ class GraphViewController: UIViewController {
     private let viewModel = GraphViewModel()
     private var cancellables = Set<AnyCancellable>()
 
-    private let gradientLayer: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-            UIColor(red: 0.04, green: 0.05, blue: 0.15, alpha: 1).cgColor,
-            UIColor(red: 0.10, green: 0.12, blue: 0.23, alpha: 1).cgColor,
-        ]
-        gradient.locations = [0, 1]
-        gradient.startPoint = CGPoint(x: 0.5, y: 0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1)
-        return gradient
-    }()
+    private let gradientLayer = Theme.makeBackgroundGradient()
 
     private let graphView = GraphView()
 
@@ -37,6 +27,8 @@ class GraphViewController: UIViewController {
                 withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)),
             for: .normal)
         btn.tintColor = .white
+        btn.accessibilityLabel = "Zoom In"
+        btn.accessibilityHint = "Increase graph zoom level"
         return btn
     }()
 
@@ -48,6 +40,8 @@ class GraphViewController: UIViewController {
                 withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)),
             for: .normal)
         btn.tintColor = .white
+        btn.accessibilityLabel = "Zoom Out"
+        btn.accessibilityHint = "Decrease graph zoom level"
         return btn
     }()
 
@@ -249,7 +243,12 @@ class GraphViewController: UIViewController {
     }
 
     @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
-
+        let translation = gesture.translation(in: graphView)
+        graphView.panOffset = CGPoint(
+            x: graphView.panOffset.x + translation.x,
+            y: graphView.panOffset.y + translation.y
+        )
+        gesture.setTranslation(.zero, in: graphView)
     }
 
     @objc private func handlePinch(_ gesture: UIPinchGestureRecognizer) {

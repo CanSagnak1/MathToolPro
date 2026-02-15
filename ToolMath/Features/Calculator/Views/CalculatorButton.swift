@@ -30,10 +30,35 @@ class CalculatorButton: UIButton {
         setupAppearance()
         setupGradient()
         setupShadow()
+        setupAccessibility(title: title)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupAccessibility(title: String) {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
+        let labelMap: [String: String] = [
+            "÷": "Divide", "×": "Multiply", "+": "Plus", "-": "Minus",
+            "⌫": "Delete", "AC": "All Clear", "=": "Equals",
+            "x²": "Square", "√": "Square Root", "π": "Pi", "e": "Euler's Number",
+            "EXP": "Exponent",
+        ]
+        accessibilityLabel = labelMap[title] ?? title
+
+        switch calcButtonType {
+        case .function:
+            accessibilityHint = "Mathematical function"
+        case .equals:
+            accessibilityHint = "Calculate result"
+        case .clear:
+            accessibilityHint = "Clear all input"
+        default:
+            break
+        }
     }
 
     override func layoutSubviews() {

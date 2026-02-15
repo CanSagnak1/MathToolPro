@@ -9,11 +9,20 @@ import Foundation
 
 class MathExpressionEvaluator {
 
-    enum MathError: Error {
+    enum MathError: Error, LocalizedError {
         case invalidExpression
         case divisionByZero
         case invalidFunction
         case syntaxError
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidExpression: return "Invalid Expression"
+            case .divisionByZero: return "Cannot divide by zero"
+            case .invalidFunction: return "Unknown Function"
+            case .syntaxError: return "Syntax Error"
+            }
+        }
     }
 
     static func evaluate(_ expression: String) -> Result<Double, MathError> {
@@ -23,10 +32,15 @@ class MathExpressionEvaluator {
             .replacingOccurrences(of: "×", with: "*")
             .replacingOccurrences(of: "÷", with: "/")
             .replacingOccurrences(of: "π", with: String(Double.pi))
-            .replacingOccurrences(of: "e", with: String(M_E))
+
+        let eulerReplaced = sanitized.replacingOccurrences(
+            of: "(?<![a-zA-Z0-9.])e(?![a-zA-Z0-9.])",
+            with: String(M_E),
+            options: .regularExpression
+        )
 
         do {
-            let result = try evaluateExpression(sanitized)
+            let result = try evaluateExpression(eulerReplaced)
             if result.isNaN || result.isInfinite {
                 return .failure(.invalidExpression)
             }

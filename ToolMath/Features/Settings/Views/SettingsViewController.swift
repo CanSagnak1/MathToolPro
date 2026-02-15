@@ -15,17 +15,7 @@ class SettingsViewController: UIViewController {
 
     private var expandedSections: Set<String> = ["APPEARANCE"]
 
-    private let gradientLayer: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-            UIColor(red: 0.04, green: 0.05, blue: 0.15, alpha: 1).cgColor,
-            UIColor(red: 0.10, green: 0.12, blue: 0.23, alpha: 1).cgColor,
-        ]
-        gradient.locations = [0, 1]
-        gradient.startPoint = CGPoint(x: 0.5, y: 0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1)
-        return gradient
-    }()
+    private let gradientLayer = Theme.makeBackgroundGradient()
 
     private let scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -221,21 +211,52 @@ class SettingsViewController: UIViewController {
 
     private func buildCalculationSection() {
         let angleMode = UISegmentedControl(items: ["Degrees", "Radians"])
-        angleMode.selectedSegmentIndex = 0
+        angleMode.selectedSegmentIndex = viewModel.angleMode == .degrees ? 0 : 1
+        angleMode.addAction(
+            UIAction { [weak self] _ in
+                let modes: [AngleMode] = [.degrees, .radians]
+                self?.viewModel.angleModeChange.send(modes[angleMode.selectedSegmentIndex])
+            }, for: .valueChanged)
+
+        let decimalLabel = UILabel()
+        decimalLabel.text = "\(viewModel.decimalPlaces)"
+        decimalLabel.textColor = Theme.Colors.primary
+        decimalLabel.font = Theme.Fonts.display(size: 14, weight: .bold)
 
         let decimalStepper = UIStepper()
         decimalStepper.minimumValue = 0
         decimalStepper.maximumValue = 10
-        decimalStepper.value = 4
+        decimalStepper.value = Double(viewModel.decimalPlaces)
+        decimalStepper.addAction(
+            UIAction { [weak self] _ in
+                let val = Int(decimalStepper.value)
+                decimalLabel.text = "\(val)"
+                self?.viewModel.decimalPlacesChange.send(val)
+            }, for: .valueChanged)
+
+        let decimalRow = UIStackView(arrangedSubviews: [decimalLabel, decimalStepper])
+        decimalRow.spacing = 8
+        decimalRow.alignment = .center
 
         let sciToggle = AnimatedToggleSwitch()
+        sciToggle.isOn = viewModel.scientificNotationEnabled
+        sciToggle.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.scientificNotationChange.send(sciToggle.isOn)
+            }, for: .valueChanged)
+
         let thousandsToggle = AnimatedToggleSwitch()
+        thousandsToggle.isOn = viewModel.thousandsSeparatorEnabled
+        thousandsToggle.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.thousandsSeparatorChange.send(thousandsToggle.isOn)
+            }, for: .valueChanged)
 
         let section = createSection(
             title: "CALCULATION",
             items: [
                 createSettingRow(title: "Angle Mode", control: angleMode),
-                createSettingRow(title: "Decimal Places", control: decimalStepper),
+                createSettingRow(title: "Decimal Places", control: decimalRow),
                 createSettingRow(title: "Scientific Notation", control: sciToggle),
                 createSettingRow(title: "Thousands Separator", control: thousandsToggle),
             ])
@@ -243,15 +264,55 @@ class SettingsViewController: UIViewController {
     }
 
     private func buildGraphSection() {
+        let zoomLabel = UILabel()
+        zoomLabel.text = String(format: "%.0f", viewModel.defaultZoomLevel)
+        zoomLabel.textColor = Theme.Colors.primary
+        zoomLabel.font = Theme.Fonts.display(size: 14, weight: .bold)
+
         let zoomStepper = UIStepper()
+        zoomStepper.minimumValue = 1
+        zoomStepper.maximumValue = 20
+        zoomStepper.value = viewModel.defaultZoomLevel
+        zoomStepper.addAction(
+            UIAction { [weak self] _ in
+                let val = zoomStepper.value
+                zoomLabel.text = String(format: "%.0f", val)
+                self?.viewModel.defaultZoomChange.send(val)
+            }, for: .valueChanged)
+
+        let zoomRow = UIStackView(arrangedSubviews: [zoomLabel, zoomStepper])
+        zoomRow.spacing = 8
+        zoomRow.alignment = .center
+
         let thicknessControl = UISegmentedControl(items: ["Thin", "Medium", "Thick"])
+        let thicknesses: [LineThickness] = [.thin, .medium, .thick]
+        thicknessControl.selectedSegmentIndex =
+            thicknesses.firstIndex(of: viewModel.graphLineThickness) ?? 1
+        thicknessControl.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.lineThicknessChange.send(
+                    thicknesses[thicknessControl.selectedSegmentIndex])
+            }, for: .valueChanged)
+
         let gridControl = UISegmentedControl(items: ["Low", "Med", "High"])
+        let grids: [GridDensity] = [.low, .medium, .high]
+        gridControl.selectedSegmentIndex = grids.firstIndex(of: viewModel.graphGridDensity) ?? 1
+        gridControl.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.gridDensityChange.send(grids[gridControl.selectedSegmentIndex])
+            }, for: .valueChanged)
+
         let axesToggle = AnimatedToggleSwitch()
+        axesToggle.isOn = viewModel.graphShowAxes
+        axesToggle.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.showAxesChange.send(axesToggle.isOn)
+            }, for: .valueChanged)
 
         let section = createSection(
             title: "GRAPH PLOTTER",
             items: [
-                createSettingRow(title: "Default Zoom", control: zoomStepper),
+                createSettingRow(title: "Default Zoom", control: zoomRow),
                 createSettingRow(title: "Line Thickness", control: thicknessControl),
                 createSettingRow(title: "Grid Density", control: gridControl),
                 createSettingRow(title: "Show Axes", control: axesToggle),
@@ -261,10 +322,25 @@ class SettingsViewController: UIViewController {
 
     private func buildConverterSection() {
         let categoryButton = UIButton(type: .system)
-        categoryButton.setTitle("Length", for: .normal)
+        categoryButton.setTitle(viewModel.converterDefaultCategory.displayName, for: .normal)
         categoryButton.setTitleColor(Theme.Colors.primary, for: .normal)
 
+        let categories = ConversionCategoryDefault.allCases
+        let menuActions = categories.map { cat in
+            UIAction(title: cat.displayName) { [weak self] _ in
+                categoryButton.setTitle(cat.displayName, for: .normal)
+                self?.viewModel.defaultCategoryChange.send(cat)
+            }
+        }
+        categoryButton.menu = UIMenu(children: menuActions)
+        categoryButton.showsMenuAsPrimaryAction = true
+
         let autoToggle = AnimatedToggleSwitch()
+        autoToggle.isOn = viewModel.converterAutoConvert
+        autoToggle.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.autoConvertChange.send(autoToggle.isOn)
+            }, for: .valueChanged)
 
         let section = createSection(
             title: "CONVERTER",
@@ -278,9 +354,38 @@ class SettingsViewController: UIViewController {
     private func buildDataManagementSection() {
         let clearCalcBtn = createActionButton(
             title: "Clear Calculator History", color: .systemOrange)
+        clearCalcBtn.addAction(
+            UIAction { [weak self] _ in
+                self?.showConfirmation(
+                    title: "Clear Calculator History?", message: "This cannot be undone."
+                ) {
+                    self?.viewModel.clearCalculatorHistoryTrigger.send()
+                    HapticManager.shared.notification(.success)
+                }
+            }, for: .touchUpInside)
+
         let clearConvBtn = createActionButton(
             title: "Clear Converter History", color: .systemOrange)
+        clearConvBtn.addAction(
+            UIAction { [weak self] _ in
+                self?.showConfirmation(
+                    title: "Clear Converter History?", message: "This cannot be undone."
+                ) {
+                    self?.viewModel.clearConverterHistoryTrigger.send()
+                    HapticManager.shared.notification(.success)
+                }
+            }, for: .touchUpInside)
+
         let clearAllBtn = createActionButton(title: "Clear All Data", color: .systemRed)
+        clearAllBtn.addAction(
+            UIAction { [weak self] _ in
+                self?.showConfirmation(
+                    title: "Clear All Data?", message: "All history will be permanently deleted."
+                ) {
+                    self?.viewModel.clearAllDataTrigger.send()
+                    HapticManager.shared.notification(.success)
+                }
+            }, for: .touchUpInside)
 
         let section = createSection(
             title: "DATA MANAGEMENT", items: [clearCalcBtn, clearConvBtn, clearAllBtn])
@@ -289,7 +394,18 @@ class SettingsViewController: UIViewController {
 
     private func buildAdvancedSection() {
         let developerToggle = AnimatedToggleSwitch()
+        developerToggle.isOn = viewModel.developerMode
+        developerToggle.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.developerModeChange.send(developerToggle.isOn)
+            }, for: .valueChanged)
+
         let performanceToggle = AnimatedToggleSwitch()
+        performanceToggle.isOn = viewModel.performanceMode
+        performanceToggle.addAction(
+            UIAction { [weak self] _ in
+                self?.viewModel.performanceModeChange.send(performanceToggle.isOn)
+            }, for: .valueChanged)
 
         let section = createSection(
             title: "ADVANCED",
@@ -301,8 +417,11 @@ class SettingsViewController: UIViewController {
     }
 
     private func buildAboutSection() {
-        let versionLabel = createInfoLabel(text: "Version 1.0.0")
-        let buildLabel = createInfoLabel(text: "Build 100")
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+
+        let versionLabel = createInfoLabel(text: "Version \(version)")
+        let buildLabel = createInfoLabel(text: "Build \(build)")
 
         let section = createSection(title: "ABOUT", items: [versionLabel, buildLabel])
         contentStack.addArrangedSubview(section)
@@ -310,6 +429,20 @@ class SettingsViewController: UIViewController {
 
     private func buildResetSection() {
         let resetBtn = createActionButton(title: "Reset All Settings", color: .systemRed)
+        resetBtn.addAction(
+            UIAction { [weak self] _ in
+                self?.showConfirmation(
+                    title: "Reset All Settings?", message: "All settings will return to defaults."
+                ) {
+                    self?.viewModel.resetSettingsTrigger.send()
+                    HapticManager.shared.refreshSettings()
+                    HapticManager.shared.notification(.success)
+                    // Rebuild UI with reset values
+                    self?.contentStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+                    self?.buildSections()
+                }
+            }, for: .touchUpInside)
+
         let section = createSection(title: "RESET", items: [resetBtn])
         contentStack.addArrangedSubview(section)
     }
@@ -335,7 +468,16 @@ class SettingsViewController: UIViewController {
         return label
     }
 
-    private func setupBindings() {
+    private func showConfirmation(title: String, message: String, action: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Confirm", style: .destructive) { _ in action() })
+        present(alert, animated: true)
+    }
 
+    private func setupBindings() {
+        viewModel.hapticFeedbackEnabledChange.sink { _ in
+            HapticManager.shared.refreshSettings()
+        }.store(in: &cancellables)
     }
 }

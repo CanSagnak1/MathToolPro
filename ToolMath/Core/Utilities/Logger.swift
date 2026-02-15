@@ -15,16 +15,20 @@ class Logger {
     func log(
         _ message: String, file: String = #file, function: String = #function, line: Int = #line
     ) {
-        let fileName = (file as NSString).lastPathComponent
-        let logMessage = "📝 [LOG] \(fileName):\(line) - \(function) -> \(message)"
-        print(logMessage)
+        #if DEBUG
+            let fileName = (file as NSString).lastPathComponent
+            let logMessage = "📝 [LOG] \(fileName):\(line) - \(function) -> \(message)"
+            print(logMessage)
+        #endif
     }
 
     func error(
         _ message: String, file: String = #file, function: String = #function, line: Int = #line
     ) {
-        let fileName = (file as NSString).lastPathComponent
-        let logMessage = "❌ [ERROR] \(fileName):\(line) - \(function) -> \(message)"
-        print(logMessage)
+        #if DEBUG
+            let fileName = (file as NSString).lastPathComponent
+            let logMessage = "❌ [ERROR] \(fileName):\(line) - \(function) -> \(message)"
+            print(logMessage)
+        #endif
     }
 }

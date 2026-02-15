@@ -91,6 +91,84 @@ class SettingsViewModel {
             self?.settings.save()
         }.store(in: &cancellables)
 
+        angleModeChange.sink { [weak self] value in
+            self?.angleMode = value
+            self?.settings.angleMode = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        decimalPlacesChange.sink { [weak self] value in
+            self?.decimalPlaces = value
+            self?.settings.decimalPlaces = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        scientificNotationChange.sink { [weak self] value in
+            self?.scientificNotationEnabled = value
+            self?.settings.scientificNotationEnabled = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        thousandsSeparatorChange.sink { [weak self] value in
+            self?.thousandsSeparatorEnabled = value
+            self?.settings.thousandsSeparatorEnabled = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        defaultZoomChange.sink { [weak self] value in
+            self?.defaultZoomLevel = value
+            self?.settings.defaultZoomLevel = Float(value)
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        lineThicknessChange.sink { [weak self] value in
+            self?.graphLineThickness = value
+            self?.settings.graphLineThickness = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        gridDensityChange.sink { [weak self] value in
+            self?.graphGridDensity = value
+            self?.settings.graphGridDensity = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        showAxesChange.sink { [weak self] value in
+            self?.graphShowAxes = value
+            self?.settings.showAxesLabels = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        antialiasingChange.sink { [weak self] value in
+            self?.graphAntialiasing = value
+            self?.settings.graphAntialiasing = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        defaultCategoryChange.sink { [weak self] value in
+            self?.converterDefaultCategory = value
+            self?.settings.defaultConversionCategory = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        autoConvertChange.sink { [weak self] value in
+            self?.converterAutoConvert = value
+            self?.settings.autoConvert = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        developerModeChange.sink { [weak self] value in
+            self?.developerMode = value
+            self?.settings.developerMode = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
+        performanceModeChange.sink { [weak self] value in
+            self?.performanceMode = value
+            self?.settings.performanceMode = value
+            self?.settings.save()
+        }.store(in: &cancellables)
+
         clearCalculatorHistoryTrigger.sink {
             UserDefaults.standard.removeObject(forKey: "calculator_history")
         }.store(in: &cancellables)

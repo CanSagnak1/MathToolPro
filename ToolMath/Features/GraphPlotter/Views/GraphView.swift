@@ -17,6 +17,10 @@ class GraphView: UIView {
         didSet { setNeedsDisplay() }
     }
 
+    var panOffset: CGPoint = .zero {
+        didSet { setNeedsDisplay() }
+    }
+
     weak var viewModel: GraphViewModel?
 
     override init(frame: CGRect) {
@@ -39,8 +43,8 @@ class GraphView: UIView {
 
         let width = rect.width
         let height = rect.height
-        let centerX = width / 2
-        let centerY = height / 2
+        let centerX = width / 2 + panOffset.x
+        let centerY = height / 2 + panOffset.y
 
         let gridScale = settings.graphGridDensity.scale
 

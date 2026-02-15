@@ -13,17 +13,7 @@ class ConverterViewController: UIViewController {
     private let viewModel = ConverterViewModel()
     private var cancellables = Set<AnyCancellable>()
 
-    private let gradientLayer: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-            UIColor(red: 0.04, green: 0.05, blue: 0.15, alpha: 1).cgColor,
-            UIColor(red: 0.10, green: 0.12, blue: 0.23, alpha: 1).cgColor,
-        ]
-        gradient.locations = [0, 1]
-        gradient.startPoint = CGPoint(x: 0.5, y: 0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1)
-        return gradient
-    }()
+    private let gradientLayer = Theme.makeBackgroundGradient()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -57,6 +47,7 @@ class ConverterViewController: UIViewController {
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
+        label.accessibilityLabel = "Source Value"
         return label
     }()
 
@@ -83,6 +74,8 @@ class ConverterViewController: UIViewController {
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
         btn.imageView?.contentMode = .scaleAspectFit
+        btn.accessibilityLabel = "Swap Units"
+        btn.accessibilityHint = "Swap source and target units"
         return btn
     }()
 
@@ -93,6 +86,7 @@ class ConverterViewController: UIViewController {
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
+        label.accessibilityLabel = "Converted Value"
         return label
     }()
 
@@ -255,6 +249,8 @@ class ConverterViewController: UIViewController {
         if key == "⌫" {
             btn.setImage(UIImage(systemName: "delete.left.fill"), for: .normal)
             btn.tintColor = .systemRed
+            btn.accessibilityLabel = "Delete"
+            btn.accessibilityHint = "Delete last digit"
         } else {
             btn.setTitleColor(.white, for: .normal)
             btn.titleLabel?.font = Theme.Fonts.display(size: 24, weight: .medium)

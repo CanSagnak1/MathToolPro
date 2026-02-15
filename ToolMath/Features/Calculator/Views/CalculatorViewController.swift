@@ -15,17 +15,7 @@ class CalculatorViewController: UIViewController {
 
     private var isScientificMode = false
 
-    private let gradientLayer: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-            UIColor(red: 0.04, green: 0.05, blue: 0.15, alpha: 1).cgColor,
-            UIColor(red: 0.10, green: 0.12, blue: 0.23, alpha: 1).cgColor,
-        ]
-        gradient.locations = [0, 1]
-        gradient.startPoint = CGPoint(x: 0.5, y: 0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1)
-        return gradient
-    }()
+    private let gradientLayer = Theme.makeBackgroundGradient()
 
     private let displayView = CalculatorDisplayView()
 
@@ -38,6 +28,8 @@ class CalculatorViewController: UIViewController {
         btn.layer.cornerRadius = 20
         btn.layer.borderWidth = 1
         btn.layer.borderColor = UIColor(white: 1, alpha: 0.15).cgColor
+        btn.accessibilityLabel = "Scientific Mode"
+        btn.accessibilityHint = "Switch to scientific calculator"
         return btn
     }()
 
@@ -287,7 +279,11 @@ class CalculatorViewController: UIViewController {
             displayView.updateResult(viewModel.display, animated: true)
         }
 
-        if viewModel.display == "Error" {
+        let errorMessages = [
+            "Error", "Invalid Expression", "Cannot divide by zero", "Unknown Function",
+            "Syntax Error",
+        ]
+        if errorMessages.contains(where: { viewModel.display.contains($0) }) {
             displayView.showError()
         }
     }
@@ -328,6 +324,11 @@ class CalculatorViewController: UIViewController {
 
         UIView.animate(withDuration: 0.25) {
             self.modeToggleButton.setTitle(self.isScientificMode ? "BASIC" : "SCI", for: .normal)
+            self.modeToggleButton.accessibilityLabel =
+                self.isScientificMode ? "Basic Mode" : "Scientific Mode"
+            self.modeToggleButton.accessibilityHint =
+                self.isScientificMode
+                ? "Switch to basic calculator" : "Switch to scientific calculator"
         }
 
         HapticManager.shared.impact()

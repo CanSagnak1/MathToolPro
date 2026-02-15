@@ -99,6 +99,13 @@ class CalculatorViewModel {
         case .success(let value):
             let resString = formatResult(value)
 
+            if resString.starts(with: "Error") {
+                display = resString
+                expressionPreview = currentExpression
+                isNewCalculation = true
+                return
+            }
+
             let newHistory = CalculationHistory(
                 expression: currentExpression,
                 result: resString
@@ -114,16 +121,19 @@ class CalculatorViewModel {
             currentExpression = resString
             isNewCalculation = true
 
-        case .failure(_):
-            display = "Error"
+        case .failure(let error):
+            display = error.localizedDescription
             expressionPreview = currentExpression
             isNewCalculation = true
         }
     }
 
     private func formatResult(_ value: Double) -> String {
-        if value.isNaN || value.isInfinite {
-            return "Error"
+        if value.isNaN {
+            return "Error: Undefined"
+        }
+        if value.isInfinite {
+            return value > 0 ? "∞" : "-∞"
         }
 
         let settings = AppSettings.load()

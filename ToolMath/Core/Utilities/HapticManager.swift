@@ -10,31 +10,36 @@ import UIKit
 final class HapticManager {
     static let shared = HapticManager()
 
-    private init() {}
+    private var hapticEnabled: Bool
+
+    private init() {
+        let settings = AppSettings.load()
+        hapticEnabled = settings.hapticFeedbackEnabled
+    }
+
+    func refreshSettings() {
+        let settings = AppSettings.load()
+        hapticEnabled = settings.hapticFeedbackEnabled
+    }
 
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle = .medium) {
-        guard isHapticEnabled() else { return }
+        guard hapticEnabled else { return }
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.prepare()
         generator.impactOccurred()
     }
 
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
-        guard isHapticEnabled() else { return }
+        guard hapticEnabled else { return }
         let generator = UINotificationFeedbackGenerator()
         generator.prepare()
         generator.notificationOccurred(type)
     }
 
     func selection() {
-        guard isHapticEnabled() else { return }
+        guard hapticEnabled else { return }
         let generator = UISelectionFeedbackGenerator()
         generator.prepare()
         generator.selectionChanged()
-    }
-
-    private func isHapticEnabled() -> Bool {
-        let settings = AppSettings.load()
-        return settings.hapticFeedbackEnabled
     }
 }

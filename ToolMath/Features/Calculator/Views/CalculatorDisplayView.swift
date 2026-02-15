@@ -56,11 +56,20 @@ class CalculatorDisplayView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupAccessibility()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .staticText
+        accessibilityLabel = "Calculator Display"
+        accessibilityValue = "0"
     }
 
     private func setupView() {
@@ -112,6 +121,10 @@ class CalculatorDisplayView: UIView {
         }
 
         resultLabel.text = text
+        accessibilityValue = text
+        if animated {
+            UIAccessibility.post(notification: .announcement, argument: "Result: \(text)")
+        }
     }
 
     func showError() {

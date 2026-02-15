@@ -21,6 +21,8 @@ class FloatingActionButton: UIView {
         btn.layer.shadowOpacity = 0.3
         btn.layer.shadowOffset = CGSize(width: 0, height: 4)
         btn.layer.shadowRadius = 8
+        btn.accessibilityLabel = "Add Function"
+        btn.accessibilityHint = "Add a new mathematical function to the graph"
         return btn
     }()
 
