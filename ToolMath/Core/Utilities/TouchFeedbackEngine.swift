@@ -1,5 +1,5 @@
 //
-//  HapticManager.swift
+//  TouchFeedbackEngine.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class HapticManager {
-    static let shared = HapticManager()
+final class TouchFeedbackEngine {
+    static let shared = TouchFeedbackEngine()
 
     private var hapticEnabled: Bool
 

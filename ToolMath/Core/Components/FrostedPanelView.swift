@@ -1,5 +1,5 @@
 //
-//  GlassMorphismCard.swift
+//  FrostedPanelView.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GlassMorphismCard: UIView {
+class FrostedPanelView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

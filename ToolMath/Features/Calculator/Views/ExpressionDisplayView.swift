@@ -1,5 +1,5 @@
 //
-//  CalculatorDisplayView.swift
+//  ExpressionDisplayView.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalculatorDisplayView: UIView {
+class ExpressionDisplayView: UIView {
 
     private let expressionLabel: UILabel = {
         let label = UILabel()
@@ -135,6 +135,6 @@ class CalculatorDisplayView: UIView {
         animation.duration = 0.4
         layer.add(animation, forKey: "shake")
 
-        HapticManager.shared.notification(.error)
+        TouchFeedbackEngine.shared.notification(.error)
     }
 }

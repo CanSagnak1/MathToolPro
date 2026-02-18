@@ -17,7 +17,7 @@ class GraphViewController: UIViewController {
 
     private let graphView = GraphView()
 
-    private let zoomControlsContainer = GlassMorphismCard()
+    private let zoomControlsContainer = FrostedPanelView()
 
     private let zoomInButton: UIButton = {
         let btn = UIButton(type: .system)
@@ -53,9 +53,9 @@ class GraphViewController: UIViewController {
         return label
     }()
 
-    private let fab = FloatingActionButton()
+    private let fab = QuickActionOrb()
 
-    private let functionPanel = GlassMorphismCard()
+    private let functionPanel = FrostedPanelView()
     private let functionPanelHandle: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 1, alpha: 0.3)
@@ -284,7 +284,7 @@ class GraphViewController: UIViewController {
             self.functionPanel.alpha = 1
         }
 
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
     }
 
     private func hidePanel() {
@@ -298,7 +298,7 @@ class GraphViewController: UIViewController {
             self.functionPanel.alpha = 0
         }
 
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
     }
 
     private func zoom(factor: CGFloat) {
@@ -311,7 +311,7 @@ class GraphViewController: UIViewController {
                 self.graphView.setNeedsDisplay()
             })
 
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
     }
 
     private func updateZoomLabel() {
@@ -343,7 +343,7 @@ class GraphViewController: UIViewController {
         emptyStateLabel.isHidden = !functions.isEmpty
 
         for function in functions {
-            let card = FunctionCardView(expression: function.expression, color: function.color)
+            let card = PlotEntryView(expression: function.expression, color: function.color)
             card.setVisible(function.visible, animated: false)
 
             card.onToggleVisibility = { [weak self] in

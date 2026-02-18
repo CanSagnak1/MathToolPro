@@ -1,5 +1,5 @@
 //
-//  CalculatorButton.swift
+//  CalcKeyView.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalculatorButton: UIButton {
+class CalcKeyView: UIButton {
 
     enum ButtonType {
         case number
@@ -172,7 +172,7 @@ class CalculatorButton: UIButton {
         }
 
         if pressed {
-            HapticManager.shared.impact()
+            TouchFeedbackEngine.shared.impact()
         }
     }
 

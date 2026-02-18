@@ -1,5 +1,5 @@
 //
-//  GradientBackgroundView.swift
+//  AmbientBackdropView.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GradientBackgroundView: UIView {
+class AmbientBackdropView: UIView {
     override class var layerClass: AnyClass {
         return CAGradientLayer.self
     }

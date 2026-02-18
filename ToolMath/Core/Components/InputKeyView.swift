@@ -1,5 +1,5 @@
 //
-//  KeypadButton.swift
+//  InputKeyView.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class KeypadButton: UIButton {
+class InputKeyView: UIButton {
     enum ButtonType {
         case number
         case function
@@ -55,7 +55,7 @@ class KeypadButton: UIButton {
     }
 
     @objc private func handleTouchDown() {
-        HapticManager.shared.impact(.light)
+        TouchFeedbackEngine.shared.impact(.light)
         UIView.animate(withDuration: Theme.Animation.fast) {
             self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             self.alpha = 0.8

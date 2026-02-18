@@ -1,5 +1,5 @@
 //
-//  CalculatorViewModel.swift
+//  CalcEngineViewModel.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class CalculatorViewModel {
+class CalcEngineViewModel {
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -93,7 +93,7 @@ class CalculatorViewModel {
     }
 
     private func evaluate() {
-        let result = MathExpressionEvaluator.evaluate(currentExpression)
+        let result = FormulaProcessor.evaluate(currentExpression)
 
         switch result {
         case .success(let value):

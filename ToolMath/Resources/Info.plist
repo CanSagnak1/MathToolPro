@@ -19,5 +19,9 @@
 			</array>
 		</dict>
 	</dict>
+    <key>CFBundleDisplayName</key>
+    <string>CalcBoard Pro</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.education</string>
 </dict>
 </plist>

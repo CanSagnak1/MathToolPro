@@ -1,5 +1,5 @@
 //
-//  ExpressionParser.swift
+//  FormulaTokenizer.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ExpressionParser {
+class FormulaTokenizer {
 
     private static let formatter: NumberFormatter = {
         let fmt = NumberFormatter()
@@ -37,7 +37,7 @@ class ExpressionParser {
 
         expr = expr.replacingOccurrences(of: "x", with: "(\(formattedX))")
 
-        guard let result = try? MathExpressionEvaluator.evaluate(expr).get() else {
+        guard let result = try? FormulaProcessor.evaluate(expr).get() else {
             return nil
         }
 

@@ -1,5 +1,5 @@
 //
-//  CardView.swift
+//  ElevatedSurfaceView.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CardView: UIView {
+class ElevatedSurfaceView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()

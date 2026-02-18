@@ -1,5 +1,5 @@
 //
-//  MathExpressionEvaluator.swift
+//  FormulaProcessor.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MathExpressionEvaluator {
+class FormulaProcessor {
 
     enum MathError: Error, LocalizedError {
         case invalidExpression

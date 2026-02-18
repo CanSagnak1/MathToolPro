@@ -1,5 +1,5 @@
 //
-//  FloatingActionButton.swift
+//  QuickActionOrb.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FloatingActionButton: UIView {
+class QuickActionOrb: UIView {
 
     var onPrimaryAction: (() -> Void)?
     var onSecondaryActions: ((Int) -> Void)?
@@ -71,7 +71,7 @@ class FloatingActionButton: UIView {
     }
 
     private func handleTap() {
-        HapticManager.shared.impact()
+        TouchFeedbackEngine.shared.impact()
 
         UIView.animate(
             withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5

@@ -38,10 +38,10 @@ class ConverterViewController: UIViewController {
         return stack
     }()
 
-    private let conversionCard = GlassMorphismCard()
+    private let conversionCard = FrostedPanelView()
 
-    private let fromValueLabel: AnimatedValueLabel = {
-        let label = AnimatedValueLabel()
+    private let fromValueLabel: LiveNumberLabel = {
+        let label = LiveNumberLabel()
         label.font = Theme.Fonts.display(size: 52, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center
@@ -79,8 +79,8 @@ class ConverterViewController: UIViewController {
         return btn
     }()
 
-    private let toValueLabel: AnimatedValueLabel = {
-        let label = AnimatedValueLabel()
+    private let toValueLabel: LiveNumberLabel = {
+        let label = LiveNumberLabel()
         label.font = Theme.Fonts.display(size: 52, weight: .bold)
         label.textColor = Theme.Colors.primary
         label.textAlignment = .center
@@ -224,7 +224,7 @@ class ConverterViewController: UIViewController {
             rowStack.distribution = .fillEqually
 
             for key in row {
-                let btn = createKeypadButton(key)
+                let btn = createInputKeyView(key)
                 rowStack.addArrangedSubview(btn)
             }
             mainStack.addArrangedSubview(rowStack)
@@ -242,7 +242,7 @@ class ConverterViewController: UIViewController {
         ])
     }
 
-    private func createKeypadButton(_ key: String) -> UIButton {
+    private func createInputKeyView(_ key: String) -> UIButton {
         let btn = UIButton(type: .system)
         btn.setTitle(key == "⌫" ? "" : key, for: .normal)
 
@@ -410,7 +410,7 @@ class ConverterViewController: UIViewController {
             }
         }
 
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
     }
 
     private func animateSwap() {
@@ -420,7 +420,7 @@ class ConverterViewController: UIViewController {
             self.swapButton.transform = self.swapButton.transform.rotated(by: .pi)
         }
 
-        HapticManager.shared.impact()
+        TouchFeedbackEngine.shared.impact()
     }
 
     private func animateCategoryChange() {
@@ -436,7 +436,7 @@ class ConverterViewController: UIViewController {
             }
         }
 
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
     }
 
     private func updateAllCategoryPills() {
@@ -460,7 +460,7 @@ class ConverterViewController: UIViewController {
                     } else {
                         self?.viewModel.toUnitChange.send(unit)
                     }
-                    HapticManager.shared.selection()
+                    TouchFeedbackEngine.shared.selection()
                 })
         }
 

@@ -1,5 +1,5 @@
 //
-//  SettingsSectionHeaderView.swift
+//  PreferenceGroupHeader.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsSectionHeaderView: UIView {
+class PreferenceGroupHeader: UIView {
 
     var onTap: (() -> Void)?
 
@@ -83,7 +83,7 @@ class SettingsSectionHeaderView: UIView {
             chevronIcon.transform = CGAffineTransform(rotationAngle: rotation)
         }
 
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
     }
 
     func setExpanded(_ expanded: Bool, animated: Bool = false) {

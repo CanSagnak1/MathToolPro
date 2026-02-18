@@ -1,5 +1,5 @@
 //
-//  AnimatedValueLabel.swift
+//  LiveNumberLabel.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AnimatedValueLabel: UILabel {
+class LiveNumberLabel: UILabel {
 
     func setValue(_ value: String, animated: Bool = true) {
         guard animated else {

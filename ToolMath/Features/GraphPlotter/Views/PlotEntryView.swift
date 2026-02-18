@@ -1,5 +1,5 @@
 //
-//  FunctionCardView.swift
+//  PlotEntryView.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FunctionCardView: UIView {
+class PlotEntryView: UIView {
 
     var onToggleVisibility: (() -> Void)?
     var onDelete: (() -> Void)?
@@ -117,7 +117,7 @@ class FunctionCardView: UIView {
             self.colorDot.alpha = self.isVisible ? 1 : 0.3
         }
 
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
         onToggleVisibility?()
     }
 
@@ -137,7 +137,7 @@ class FunctionCardView: UIView {
             self.onDelete?()
         }
 
-        HapticManager.shared.impact()
+        TouchFeedbackEngine.shared.impact()
     }
 
     func setVisible(_ visible: Bool, animated: Bool = false) {

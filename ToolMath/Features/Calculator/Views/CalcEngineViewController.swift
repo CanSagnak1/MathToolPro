@@ -1,5 +1,5 @@
 //
-//  CalculatorViewController.swift
+//  CalcEngineViewController.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -8,16 +8,16 @@
 import Combine
 import UIKit
 
-class CalculatorViewController: UIViewController {
+class CalcEngineViewController: UIViewController {
 
-    private let viewModel = CalculatorViewModel()
+    private let viewModel = CalcEngineViewModel()
     private var cancellables = Set<AnyCancellable>()
 
     private var isScientificMode = false
 
     private let gradientLayer = Theme.makeBackgroundGradient()
 
-    private let displayView = CalculatorDisplayView()
+    private let displayView = ExpressionDisplayView()
 
     private let modeToggleButton: UIButton = {
         let btn = UIButton(type: .system)
@@ -30,6 +30,20 @@ class CalculatorViewController: UIViewController {
         btn.layer.borderColor = UIColor(white: 1, alpha: 0.15).cgColor
         btn.accessibilityLabel = "Scientific Mode"
         btn.accessibilityHint = "Switch to scientific calculator"
+        return btn
+    }()
+
+    private let settingsButton: UIButton = {
+        let btn = UIButton(type: .system)
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+        let image = UIImage(systemName: "gearshape.fill", withConfiguration: config)
+        btn.setImage(image, for: .normal)
+        btn.tintColor = Theme.Colors.primary
+        btn.backgroundColor = UIColor(white: 1, alpha: 0.08)
+        btn.layer.cornerRadius = 20
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor = UIColor(white: 1, alpha: 0.15).cgColor
+        btn.accessibilityLabel = "Settings"
         return btn
     }()
 
@@ -57,6 +71,7 @@ class CalculatorViewController: UIViewController {
     }
 
     private func setupUI() {
+        view.addSubview(settingsButton)  // Add settings button
         view.addSubview(displayView)
         view.addSubview(modeToggleButton)
         view.addSubview(keypadContainer)
@@ -70,6 +85,8 @@ class CalculatorViewController: UIViewController {
         scientificKeypad.alpha = 0
         scientificKeypad.isHidden = true
     }
+
+    // ... basicKeypad and scientificKeypad creation ...
 
     private func createBasicKeypad() -> UIView {
         let container = UIView()
@@ -94,7 +111,7 @@ class CalculatorViewController: UIViewController {
             rowStack.distribution = .fillEqually
 
             for title in row {
-                let type: CalculatorButton.ButtonType
+                let type: CalcKeyView.ButtonType
                 if title == "AC" {
                     type = .clear
                 } else if title == "=" {
@@ -107,7 +124,7 @@ class CalculatorViewController: UIViewController {
                     type = .number
                 }
 
-                let btn = CalculatorButton(title: title, type: type)
+                let btn = CalcKeyView(title: title, type: type)
                 btn.addAction(
                     UIAction { [weak self] _ in
                         self?.handleButtonPress(title)
@@ -159,7 +176,7 @@ class CalculatorViewController: UIViewController {
             rowStack.distribution = .fillEqually
 
             for title in row {
-                let type: CalculatorButton.ButtonType
+                let type: CalcKeyView.ButtonType
                 if title == "AC" {
                     type = .clear
                 } else if title == "=" {
@@ -176,7 +193,7 @@ class CalculatorViewController: UIViewController {
                     type = .number
                 }
 
-                let btn = CalculatorButton(title: title, type: type)
+                let btn = CalcKeyView(title: title, type: type)
                 btn.addAction(
                     UIAction { [weak self] _ in
                         self?.handleButtonPress(title)
@@ -204,6 +221,7 @@ class CalculatorViewController: UIViewController {
     }
 
     private func layout() {
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
         displayView.translatesAutoresizingMaskIntoConstraints = false
         modeToggleButton.translatesAutoresizingMaskIntoConstraints = false
         keypadContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -211,12 +229,19 @@ class CalculatorViewController: UIViewController {
         scientificKeypad.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            // Settings Button (Top Right)
+            settingsButton.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            settingsButton.widthAnchor.constraint(equalToConstant: 40),
+            settingsButton.heightAnchor.constraint(equalToConstant: 40),
 
-            displayView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            // Display View (Pushed down slightly to make room if needed, or just below)
+            // Let's position displayView below settings button line to avoid overlap
+            displayView.topAnchor.constraint(equalTo: settingsButton.bottomAnchor, constant: 16),
             displayView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             displayView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            displayView.heightAnchor.constraint(equalToConstant: 250),
+            displayView.heightAnchor.constraint(equalToConstant: 220),  // Reduced slightly to accommodate top space
 
             modeToggleButton.topAnchor.constraint(equalTo: displayView.bottomAnchor, constant: 20),
             modeToggleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -247,6 +272,21 @@ class CalculatorViewController: UIViewController {
             UIAction { [weak self] _ in
                 self?.toggleScientificMode()
             }, for: .touchUpInside)
+
+        settingsButton.addAction(
+            UIAction { [weak self] _ in
+                self?.presentSettings()
+            }, for: .touchUpInside)
+    }
+
+    private func presentSettings() {
+        let settingsVC = SettingsViewController()
+        // Provide a way to dismiss if presented modally without nav controller
+        if let sheet = settingsVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        present(settingsVC, animated: true)
     }
 
     private func setupBindings() {
@@ -331,6 +371,6 @@ class CalculatorViewController: UIViewController {
                 ? "Switch to basic calculator" : "Switch to scientific calculator"
         }
 
-        HapticManager.shared.impact()
+        TouchFeedbackEngine.shared.impact()
     }
 }

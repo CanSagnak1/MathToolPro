@@ -1,5 +1,5 @@
 //
-//  AnimatedToggleSwitch.swift
+//  GlowToggleControl.swift
 //  ToolMath
 //
 //  Created by Celal Can Sağnak on 16.12.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AnimatedToggleSwitch: UISwitch {
+class GlowToggleControl: UISwitch {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +32,7 @@ class AnimatedToggleSwitch: UISwitch {
 
     @objc private func valueDidChange() {
         animateGlow()
-        HapticManager.shared.selection()
+        TouchFeedbackEngine.shared.selection()
     }
 
     private func animateGlow() {

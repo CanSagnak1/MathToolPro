@@ -94,7 +94,7 @@ class GraphViewModel {
         let step = max((maxX - minX) / 500.0, 0.001)
 
         for xValue in stride(from: minX, through: maxX, by: step) {
-            if let y = ExpressionParser.evaluate(expression: function.expression, x: xValue) {
+            if let y = FormulaTokenizer.evaluate(expression: function.expression, x: xValue) {
                 if !y.isNaN && !y.isInfinite {
                     let screenX = center.x + (xValue * scale)
                     let screenY = center.y - (y * scale)

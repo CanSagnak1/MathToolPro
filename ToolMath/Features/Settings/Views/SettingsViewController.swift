@@ -32,7 +32,7 @@ class SettingsViewController: UIViewController {
     }()
 
     private var sectionContainers: [String: UIView] = [:]
-    private var sectionHeaders: [String: SettingsSectionHeaderView] = [:]
+    private var sectionHeaders: [String: PreferenceGroupHeader] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,9 +92,9 @@ class SettingsViewController: UIViewController {
         let container = UIView()
         container.backgroundColor = .clear
 
-        let card = GlassMorphismCard()
+        let card = FrostedPanelView()
 
-        let header = SettingsSectionHeaderView(title: title)
+        let header = PreferenceGroupHeader(title: title)
         sectionHeaders[title] = header
 
         let itemsStack = UIStackView(arrangedSubviews: items)
@@ -185,7 +185,7 @@ class SettingsViewController: UIViewController {
     }
 
     private func buildAppearanceSection() {
-        let hapticToggle = AnimatedToggleSwitch()
+        let hapticToggle = GlowToggleControl()
         hapticToggle.isOn = viewModel.hapticFeedbackEnabled
         hapticToggle.addAction(
             UIAction { [weak self] _ in
@@ -238,14 +238,14 @@ class SettingsViewController: UIViewController {
         decimalRow.spacing = 8
         decimalRow.alignment = .center
 
-        let sciToggle = AnimatedToggleSwitch()
+        let sciToggle = GlowToggleControl()
         sciToggle.isOn = viewModel.scientificNotationEnabled
         sciToggle.addAction(
             UIAction { [weak self] _ in
                 self?.viewModel.scientificNotationChange.send(sciToggle.isOn)
             }, for: .valueChanged)
 
-        let thousandsToggle = AnimatedToggleSwitch()
+        let thousandsToggle = GlowToggleControl()
         thousandsToggle.isOn = viewModel.thousandsSeparatorEnabled
         thousandsToggle.addAction(
             UIAction { [weak self] _ in
@@ -302,7 +302,7 @@ class SettingsViewController: UIViewController {
                 self?.viewModel.gridDensityChange.send(grids[gridControl.selectedSegmentIndex])
             }, for: .valueChanged)
 
-        let axesToggle = AnimatedToggleSwitch()
+        let axesToggle = GlowToggleControl()
         axesToggle.isOn = viewModel.graphShowAxes
         axesToggle.addAction(
             UIAction { [weak self] _ in
@@ -335,7 +335,7 @@ class SettingsViewController: UIViewController {
         categoryButton.menu = UIMenu(children: menuActions)
         categoryButton.showsMenuAsPrimaryAction = true
 
-        let autoToggle = AnimatedToggleSwitch()
+        let autoToggle = GlowToggleControl()
         autoToggle.isOn = viewModel.converterAutoConvert
         autoToggle.addAction(
             UIAction { [weak self] _ in
@@ -360,7 +360,7 @@ class SettingsViewController: UIViewController {
                     title: "Clear Calculator History?", message: "This cannot be undone."
                 ) {
                     self?.viewModel.clearCalculatorHistoryTrigger.send()
-                    HapticManager.shared.notification(.success)
+                    TouchFeedbackEngine.shared.notification(.success)
                 }
             }, for: .touchUpInside)
 
@@ -372,7 +372,7 @@ class SettingsViewController: UIViewController {
                     title: "Clear Converter History?", message: "This cannot be undone."
                 ) {
                     self?.viewModel.clearConverterHistoryTrigger.send()
-                    HapticManager.shared.notification(.success)
+                    TouchFeedbackEngine.shared.notification(.success)
                 }
             }, for: .touchUpInside)
 
@@ -383,7 +383,7 @@ class SettingsViewController: UIViewController {
                     title: "Clear All Data?", message: "All history will be permanently deleted."
                 ) {
                     self?.viewModel.clearAllDataTrigger.send()
-                    HapticManager.shared.notification(.success)
+                    TouchFeedbackEngine.shared.notification(.success)
                 }
             }, for: .touchUpInside)
 
@@ -393,14 +393,14 @@ class SettingsViewController: UIViewController {
     }
 
     private func buildAdvancedSection() {
-        let developerToggle = AnimatedToggleSwitch()
+        let developerToggle = GlowToggleControl()
         developerToggle.isOn = viewModel.developerMode
         developerToggle.addAction(
             UIAction { [weak self] _ in
                 self?.viewModel.developerModeChange.send(developerToggle.isOn)
             }, for: .valueChanged)
 
-        let performanceToggle = AnimatedToggleSwitch()
+        let performanceToggle = GlowToggleControl()
         performanceToggle.isOn = viewModel.performanceMode
         performanceToggle.addAction(
             UIAction { [weak self] _ in
@@ -435,8 +435,8 @@ class SettingsViewController: UIViewController {
                     title: "Reset All Settings?", message: "All settings will return to defaults."
                 ) {
                     self?.viewModel.resetSettingsTrigger.send()
-                    HapticManager.shared.refreshSettings()
-                    HapticManager.shared.notification(.success)
+                    TouchFeedbackEngine.shared.refreshSettings()
+                    TouchFeedbackEngine.shared.notification(.success)
                     // Rebuild UI with reset values
                     self?.contentStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
                     self?.buildSections()
@@ -477,7 +477,7 @@ class SettingsViewController: UIViewController {
 
     private func setupBindings() {
         viewModel.hapticFeedbackEnabledChange.sink { _ in
-            HapticManager.shared.refreshSettings()
+            TouchFeedbackEngine.shared.refreshSettings()
         }.store(in: &cancellables)
     }
 }
